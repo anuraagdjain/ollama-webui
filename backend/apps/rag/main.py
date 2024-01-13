@@ -19,6 +19,7 @@ from langchain_community.document_loaders import (
     PyPDFLoader,
     CSVLoader,
     Docx2txtLoader,
+    JSONLoader,
     UnstructuredWordDocumentLoader,
     UnstructuredMarkdownLoader,
 )
@@ -147,6 +148,7 @@ def store_doc(
         "application/pdf",
         "text/plain",
         "text/csv",
+        "application/json",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         "application/octet-stream",
     ]:
@@ -190,8 +192,12 @@ def store_doc(
         elif file.content_type == "application/octet-stream":
             if file.filename.split(".")[-1] == "md":
                 loader = UnstructuredMarkdownLoader(file_path)
+        elif file.content_type == "application/json":
+            print("Filepath: ", file_path)
+            loader = JSONLoader(file_path=file_path,jq_schema=".[] | .",json_lines=True)                 
 
         data = loader.load()
+        print("JS: ", data)
         result = store_data_in_vector_db(data, collection_name)
 
         if result:

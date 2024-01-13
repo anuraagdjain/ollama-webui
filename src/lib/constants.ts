@@ -16,7 +16,8 @@ export const SUPPORTED_FILE_TYPE = [
 	'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 	'text/markdown',
 	'text/plain',
-	'text/csv'
+	'text/csv',
+	'application/json'
 ];
 
 // Source: https://kit.svelte.dev/docs/modules#$env-static-public
